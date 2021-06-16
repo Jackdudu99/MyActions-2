@@ -599,7 +599,7 @@ function taskUrl(function_id, body = {}) {
   body["version"] = 2;
   body["channel"] = 'app';
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}&&appid=wh5&loginWQBiz=pet-town`,
+    url: `${JD_API_HOST}?functionId=${function_id}`,
     body: `body=${escape(JSON.stringify(body))}&appid=wh5&loginWQBiz=pet-town&clientVersion=9.0.4`,
     headers: {
       'Cookie': cookie,
