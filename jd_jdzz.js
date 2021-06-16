@@ -206,6 +206,7 @@ async function helpFriends() {
   }
 }
 function readShareCode() {
+  return null;
   console.log(`开始`)
   return new Promise(async resolve => {
         $.get({url: `https://wuzhi03.coding.net/p/dj/d/RandomShareCode/git/raw/main/JD_Jdzz.json`,headers:{
