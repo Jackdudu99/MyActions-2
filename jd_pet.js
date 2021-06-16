@@ -21,6 +21,12 @@ let randomCount = $.isNode() ? 20 : 5;
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+  
+  for(let c of cookiesArr) {
+    cookie = c;
+	await getUserInfo(); 
+  }
+  
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -57,6 +63,15 @@ let randomCount = $.isNode() ? 20 : 5;
     .finally(() => {
       $.done();
     })
+	
+async function getUserInfo() {
+	const result = await request('initPetTown');
+	
+	if(result.code == 0 && result.result.inviteCode) {
+		console.log('shareCode', result.result.inviteCode);
+	}
+}
+	
 async function jdPet() {
   try {
     //查询jd宠物信息
@@ -427,6 +442,8 @@ async function showMsg() {
 }
 function readShareCode() {
   return new Promise(async resolve => {
+	  resolve(null);
+	  return;
     $.get({url: "https://wuzhi03.coding.net/p/dj/d/RandomShareCode/git/raw/main/JD_Pet.json",headers:{
         "User-Agent": "Mozilla/5.0 (iPhone; CPU iPhone OS 13_2_3 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/13.0.3 Mobile/15E148 Safari/604.1 Edg/87.0.4280.88"
       }}, async (err, resp, data) => {
@@ -456,10 +473,6 @@ function shareCodesFormat() {
     newShareCodes = [];
     if ($.shareCodesArr[$.index - 1]) {
       newShareCodes = $.shareCodesArr[$.index - 1].split('@');
-    } else {
-      console.log(`由于您第${$.index}个京东账号未提供shareCode,将采纳本脚本自带的助力码\n`)
-      const tempIndex = $.index > shareCodes.length ? (shareCodes.length - 1) : ($.index - 1);
-      newShareCodes = shareCodes[tempIndex].split('@');
     }
     //因好友助力功能下线。故暂时屏蔽
     const readShareCodeRes = await readShareCode();
@@ -553,6 +566,7 @@ function TotalBean() {
 }
 // 请求
 async function request(function_id, body = {}) {
+	console.log('等待3000ms');
   await $.wait(3000); //歇口气儿, 不然会报操作频繁
   return new Promise((resolve, reject) => {
     $.post(taskUrl(function_id, body), (err, resp, data) => {
@@ -585,7 +599,7 @@ function taskUrl(function_id, body = {}) {
   body["version"] = 2;
   body["channel"] = 'app';
   return {
-    url: `${JD_API_HOST}?functionId=${function_id}`,
+    url: `${JD_API_HOST}?functionId=${function_id}&&appid=wh5&loginWQBiz=pet-town`,
     body: `body=${escape(JSON.stringify(body))}&appid=wh5&loginWQBiz=pet-town&clientVersion=9.0.4`,
     headers: {
       'Cookie': cookie,
