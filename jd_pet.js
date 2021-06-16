@@ -67,8 +67,8 @@ let randomCount = $.isNode() ? 20 : 5;
 async function getUserInfo() {
 	const result = await request('initPetTown');
 	
-	if(result.code == 0 && result.result.inviteCode) {
-		console.log('shareCode', result.result.inviteCode);
+	if(result.code == 0 && result.result.shareCode) {
+		console.log('shareCode', result.result.shareCode);
 	}
 }
 	
