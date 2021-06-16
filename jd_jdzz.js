@@ -28,6 +28,12 @@ let nowTimes = new Date(new Date().getTime() + new Date().getTimezoneOffset() * 
     $.msg($.name, '【提示】请先获取京东账号一cookie\n直接使用NobyDa的京东签到获取', 'https://bean.m.jd.com/bean/signIndex.action', {"open-url": "https://bean.m.jd.com/bean/signIndex.action"});
     return;
   }
+
+  for(let item of cookiesArr) {
+    cookie = item;
+    await getUserInfo();
+  }
+
   for (let i = 0; i < cookiesArr.length; i++) {
     if (cookiesArr[i]) {
       cookie = cookiesArr[i];
@@ -74,8 +80,8 @@ async function jdWish() {
 
   console.log('helpFriends');
   await helpFriends()
-  console.log('getUserInfo');
-  await getUserInfo();
+  // console.log('getUserInfo');
+  // await getUserInfo();
   $.nowBean = parseInt($.totalBeanNum)
   $.nowNum = parseInt($.totalNum)
   for (let i = 0; i < $.taskList.length; ++i) {
