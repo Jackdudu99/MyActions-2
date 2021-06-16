@@ -69,10 +69,13 @@ async function jdWish() {
   $.tuan = null
   $.hasOpen = false;
   $.assistStatus = 0;
-  await getTaskList(true)
+  console.log('getTaskList true');
+  await getTaskList(true);
 
+  console.log('helpFriends');
   await helpFriends()
-  await getUserInfo()
+  console.log('getUserInfo');
+  await getUserInfo();
   $.nowBean = parseInt($.totalBeanNum)
   $.nowNum = parseInt($.totalNum)
   for (let i = 0; i < $.taskList.length; ++i) {
@@ -89,7 +92,9 @@ async function jdWish() {
       await $.wait(3000)
     }
   }
+  console.log('getTaskList false');
   await getTaskList();
+  console.log('showMsg');
   await showMsg();
 }
 
